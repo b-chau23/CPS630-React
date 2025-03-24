@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { useAuthContext } from "../authContext";
 
 
 function SignUp() {
     const auth = useAuthContext();
     const [failedSignUpAttempt, setFailedSignUpAttempt] = useState('');
+    const navigate = useNavigate();
 
     async function signUp(formData: FormData) {
         const response = await fetch("http://localhost/proj2/php/signUp.php", {
@@ -20,11 +22,11 @@ function SignUp() {
         else {
             setFailedSignUpAttempt('');
             auth.setUsername(result.username);
-            auth.setRole(result.role)
+            auth.setRole(result.role);
+            navigate('/');
         }
         
     } 
-
 
     return(
         <>

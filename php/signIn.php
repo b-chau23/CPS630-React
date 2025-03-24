@@ -39,10 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["name"] = $row['name'];
             $_SESSION["email"] = $row['email'];
             $_SESSION["last_activity"] = time();
-            
-            $myfile = fopen("log.txt", "a") or die("Unable to open file!");
-            fwrite($myfile, session_id() . "\tFROM LOGIN\n");
-            fclose($myfile);
 
             echo json_encode([
                 "username" => $username, 

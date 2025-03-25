@@ -5,6 +5,7 @@ import Layout from "./components/Layout";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Logout from "./pages/Logout";
+import Trip from "./pages/Trip";
 
 export interface AuthContextType {
     username: string;    
@@ -28,11 +29,11 @@ function App() {
                         <Route element={<SignIn />} path='/SignIn' />
                         <Route element={<SignUp />} path='/SignUp' />
                         <Route element={<Logout />} path='/Logout' />
+                        <Route element={<Trip />} path='/Trip' />
                     </Route>
                 </Routes>
             </AuthContext.Provider>
             </BrowserRouter>
-        
         </>
     );
 }

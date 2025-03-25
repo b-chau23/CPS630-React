@@ -11,8 +11,13 @@ function Navbar() {
             <nav>
                 <ul>
                     <li><NavLink to='/'>Home</NavLink></li>
-                    <li><NavLink to='/about'>About</NavLink></li>
-                    {auth.username ? <li><NavLink to='/Logout'>Log Out</NavLink></li> :
+                    <li><NavLink to='/About'>About</NavLink></li>
+                    {auth.username ? 
+                    <>
+                        <li><NavLink to='/Payment'>Cart</NavLink></li>
+                        <li><NavLink to='/Trip'>Trip</NavLink></li>
+                        <li><NavLink to='/Logout'>Log Out</NavLink></li>
+                    </> :
                     <>
                         <li><NavLink to='/SignIn'>Sign In</NavLink></li>
                         <li><NavLink to='/SignUp'>Sign Up</NavLink></li>

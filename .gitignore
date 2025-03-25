@@ -8,6 +8,7 @@ cps630-app/pnpm-debug.log*
 cps630-app/lerna-debug.log*
 
 cps630-app/node_modules
+cps630-app/.env
 cps630-app/dist
 dist-ssr
 cps630-app/*.local

@@ -1,12 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuthContext } from "../authContext";
+import { usePlacesWidget } from "react-google-autocomplete";
 
 
 function SignUp() {
     const auth = useAuthContext();
     const [failedSignUpAttempt, setFailedSignUpAttempt] = useState('');
     const navigate = useNavigate();
+
+    // location autocomplete for address input
+    const { ref } = usePlacesWidget({
+        apiKey: import.meta.env.VITE_MAPS_API_KEY,
+        options: {types: ["geocode"]}
+    });
 
     async function signUp(formData: FormData) {
         const response = await fetch("http://localhost/proj2/php/signUp.php", {
@@ -56,7 +63,7 @@ function SignUp() {
                 </div>
             
                 <div className="form-group">
-                    <input type="text" id="address" name="address" placeholder="Address" required />
+                    <input ref={ref} type="text" id="address" name="address" placeholder="Address" required autoComplete="new-password"/>
                 </div>
             
                 <div className="form-group">

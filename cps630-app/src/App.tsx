@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router";
 import { AuthContext, useAuthContext } from "./authContext";
+import { getUserData } from "./utils/getUserData";
 import Layout from "./components/Layout";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Logout from "./pages/Logout";
-import Trip from "./pages/Trip";
+import Payment from "./pages/Payment";
 
+// type for the auth context -- properties and their setters
 export interface AuthContextType {
     username: string;    
     role: string;
@@ -14,10 +16,20 @@ export interface AuthContextType {
     setRole: React.Dispatch<React.SetStateAction<string>>;
 } 
 
-
-function App() {
+const userData = await getUserData();
+function App() {    
+    
+    // these will be part of our context, used for rendering appropriate content
+    // initial value is set to an empty string, value will be set when users signin/up 
+    // not for acutal authentication, nothing from client can be trusted on server
     const [username, setUsername] = useState('')
     const [role, setRole] = useState('')
+
+    // if the page was refreshed, make sure that the states are maintained
+    if (!userData.error && !username && !role) {
+        setUsername(userData.username);
+        setRole(userData.role);
+    }
 
     return (
         <>
@@ -29,7 +41,7 @@ function App() {
                         <Route element={<SignIn />} path='/SignIn' />
                         <Route element={<SignUp />} path='/SignUp' />
                         <Route element={<Logout />} path='/Logout' />
-                        <Route element={<Trip />} path='/Trip' />
+                        <Route element={<Payment />} path='/Payment' />
                     </Route>
                 </Routes>
             </AuthContext.Provider>

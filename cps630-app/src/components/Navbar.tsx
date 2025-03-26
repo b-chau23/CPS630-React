@@ -14,11 +14,12 @@ function Navbar() {
                     <li><NavLink to='/About'>About</NavLink></li>
                     {auth.username ? 
                     <>
+                    {/* if user is signed in, show these */}
                         <li><NavLink to='/Payment'>Cart</NavLink></li>
-                        <li><NavLink to='/Trip'>Trip</NavLink></li>
                         <li><NavLink to='/Logout'>Log Out</NavLink></li>
                     </> :
                     <>
+                    {/* if user is not signed in, show these */}
                         <li><NavLink to='/SignIn'>Sign In</NavLink></li>
                         <li><NavLink to='/SignUp'>Sign Up</NavLink></li>
                     </>

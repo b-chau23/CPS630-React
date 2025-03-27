@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "./ProductCard";
 import '../styles/shopping.css'
 
 interface productItems {
@@ -11,13 +11,19 @@ interface productItems {
 }
 
 // make sure localStorage is empty on page first load or any relaods
-localStorage.removeItem("cartItems");
+// note that this does not apply for re-renders
+// localStorage.removeItem("cartItems");
 
 function Shopping() {
   const [initialItems, setInitialItems] = useState<productItems[]>([]);
   const [cartList, setCartList] = useState<productItems[]>([]);
   
+  // make sure localStorage is clear whenever page is first rendered
+  useEffect(() => {
+    localStorage.removeItem("cartItems");
+  }, [])
 
+  // get the items available for sale from the backend
   useEffect(() => {
     fetch('http://localhost/proj2/php/itemsData.php')
     .then((response) => response.json())
@@ -45,7 +51,7 @@ function Shopping() {
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
       
       if (itemToClone) {
-        setCartList([...cartList, { ...itemToClone, id: `${itemToClone.id}-${Date.now()}` }]);
+        setCartList([{ ...itemToClone, id: `${itemToClone.id}-${Date.now()}` }, ...cartList]);
       }
       return;
     }

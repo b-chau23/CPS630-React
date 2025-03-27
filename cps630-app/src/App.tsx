@@ -7,7 +7,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Logout from "./pages/Logout";
 import Payment from "./pages/Payment";
-import Shopping from "./pages/Shopping";
+import Shopping from "./components/Shopping";
 
 // type for the auth context -- properties and their setters
 // note that this is for display stuff, any actual auth must be verified in backend

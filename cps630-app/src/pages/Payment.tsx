@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Trip from "./Trip";
 import { getUserData } from "../utils/getUserData";
+import InvoiceCard from "../components/InvoiceCard";
 
 // prop to be drilled to Directions component
 // Directions will need to set the delivery distance and origin for payment to store into db
@@ -41,10 +42,14 @@ function Payment() {
         }
     }
 
+    // force reload when userData is received in order to fill defaultValues
+    useEffect(() => {setfailedPaymentAttempt('')}, [userData])
+
     return (
         <>
             <div className="container">
                 <h2>Payment Details</h2>
+                <InvoiceCard />
                 <div id="invoice" className="invoice"></div>
                 <form id="paymentForm" action={makePayment}>
                     <label htmlFor="name">Name:</label><br/>

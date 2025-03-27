@@ -7,8 +7,10 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Logout from "./pages/Logout";
 import Payment from "./pages/Payment";
+import Shopping from "./pages/Shopping";
 
 // type for the auth context -- properties and their setters
+// note that this is for display stuff, any actual auth must be verified in backend
 export interface AuthContextType {
     username: string;    
     role: string;
@@ -54,5 +56,10 @@ export default App;
 
 function TempComp() {
     const asd = useAuthContext();
-    return <h1>username: {asd.username} <br/> role: {asd.role}</h1>
+    return (
+        <>
+            <h1>username: {asd.username} <br/> role: {asd.role}</h1>
+            <Shopping />
+        </>
+    );
 }

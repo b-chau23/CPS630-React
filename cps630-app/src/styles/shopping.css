@@ -1,0 +1,28 @@
+.flex-container {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.flex-container > div {
+    background-color: #f1f1f1;
+    margin: 10px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    min-width: 300px;
+    max-height: 700px;
+    overflow-y: auto;
+}
+
+.shopping {
+    color: #333;
+}
+
+/* 
+the below would be used for displaying reviews in the drag and drop shopping component 
+can be ignored for now
+*/
+.review {
+    max-height: 300px !important;
+}

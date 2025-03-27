@@ -3,7 +3,7 @@ import '../styles/productCard.css';
 interface ProductDetailsProp {
     imageSrc: string,
     productName: string,
-    price: number,
+    price: string,
 }
 
 const ProductCard = ({ imageSrc, productName, price }: ProductDetailsProp) => {

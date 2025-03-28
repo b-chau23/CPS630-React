@@ -66,3 +66,14 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+#welcome {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #f9f9f9;
+  color: #333;
+  margin: 10px auto;
+  max-width: fit-content;
+  border-radius: 10%;
+}

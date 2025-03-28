@@ -1,0 +1,33 @@
+.about {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+.team {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.team-member {
+    width: 20%;
+    margin: 10px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.3);
+    background-color: #fff;
+}
+.team-member img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.team-member h3 {
+    margin: 10px 0 5px;
+    color: #333;
+}
+.team-member p {
+    margin: 0;
+    color: #555;
+}

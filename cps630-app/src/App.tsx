@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router";
-import { AuthContext, useAuthContext } from "./authContext";
+import { AuthContext } from "./authContext";
 import { getUserData } from "./utils/getUserData";
 import Layout from "./components/Layout";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Logout from "./pages/Logout";
 import Payment from "./pages/Payment";
-import Shopping from "./components/Shopping";
+import Home from "./pages/Home";
+import About from "./pages/About";
 
 // type for the auth context -- properties and their setters
 // note that this is for display stuff, any actual auth must be verified in backend
@@ -39,12 +40,13 @@ function App() {
             <AuthContext.Provider value={{username, role, setUsername, setRole}}>
                 <Routes>
                     <Route element={<Layout />} path='/'>
-                        <Route element={<TempComp />} path='/' />
+                        <Route element={<Home />} path='/' />
+                        <Route element={<About />} path='/About' />
                         <Route element={<SignIn />} path='/SignIn' />
                         <Route element={<SignUp />} path='/SignUp' />
                         <Route element={<Logout />} path='/Logout' />
                         <Route element={<Payment />} path='/Payment' />
-                        <Route element={<Payment />} path='/DbMaintain' /> {/* not implemented yet */}
+                        {/* <Route element={<DbMaintain />} path='/DbMaintain' /> not implemented yet */}
                     </Route>
                 </Routes>
             </AuthContext.Provider>
@@ -54,13 +56,3 @@ function App() {
 }
 
 export default App;
-
-function TempComp() {
-    const asd = useAuthContext();
-    return (
-        <>
-            <h1>username: {asd.username} <br/> role: {asd.role}</h1>
-            <Shopping />
-        </>
-    );
-}

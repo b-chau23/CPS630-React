@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Trip from "./Trip";
+import Trip from "../components/Trip";
 import { getUserData } from "../utils/getUserData";
 import InvoiceCard from "../components/InvoiceCard";
 
@@ -15,13 +15,12 @@ export interface DestinationProp {
 // this holds stuff we'll need for some prefilled forms
 const userData = await getUserData();
 
-// TODO: get items+quantity+price when that is completed
 function Payment() {
     // initialize states, defualt origin will be TMU
     const [completedOrderId, setCompletedOrderId] = useState('');
     const [destination, setDestination] = useState(userData.address);
     const [failedPaymentAttempt, setfailedPaymentAttempt] = useState('');
-    const [distance, setDistance] = useState(0);
+    const [distance, setDistance] = useState(0); // distance of trip
     const [origin, setOrigin] = useState('Toronto Metropolitan University, Victoria Street, Toronto, ON, Canada',)
 
     async function makePayment(formData: FormData) {
@@ -44,8 +43,9 @@ function Payment() {
         }
     }
 
-    // force reload when userData is received in order to fill defaultValues
+    // force rerender when userData is received in order to fill defaultValues
     useEffect(() => {setfailedPaymentAttempt('')}, [userData])
+
     if (!completedOrderId) {
         return (
             <>

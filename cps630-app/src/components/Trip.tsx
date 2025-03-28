@@ -1,6 +1,6 @@
 import {APIProvider, Map} from '@vis.gl/react-google-maps';
 import Directions from '../utils/Directions';
-import { DestinationProp } from './Payment';
+import { DestinationProp } from '../pages/Payment';
 
 
 function Trip({destination, setDistance, setOrigin}: DestinationProp) {

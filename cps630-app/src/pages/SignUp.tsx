@@ -37,6 +37,7 @@ function SignUp() {
 
     return(
         <>
+            <h1>Sign Up</h1>
             <form action={signUp}>
                 <div className="form-group">
                     <input type="text" id="fullName" name="fullName" placeholder="Full Name" required />

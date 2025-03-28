@@ -67,6 +67,6 @@ function Directions({destination, setDistance, setOrigin}: DestinationProp) {
         }).catch(() => {setDistance(-1)})
     }, [directionsService, directionsRenderer, bestOrigin, destination]);
 
-    return <h1>In Directions: {destination}</h1>
+    return null
 }
 export default Directions;

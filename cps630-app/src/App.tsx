@@ -44,6 +44,7 @@ function App() {
                         <Route element={<SignUp />} path='/SignUp' />
                         <Route element={<Logout />} path='/Logout' />
                         <Route element={<Payment />} path='/Payment' />
+                        <Route element={<Payment />} path='/DbMaintain' /> {/* not implemented yet */}
                     </Route>
                 </Routes>
             </AuthContext.Provider>

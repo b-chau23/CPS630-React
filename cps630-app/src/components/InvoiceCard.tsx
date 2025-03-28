@@ -42,8 +42,8 @@ function InvoiceCard() {
         <>
             <h3>Invoice</h3>
             <ul>
-                {cartItems.map((item) => (
-                    <li key={item.id}>
+                {cartItems.map((item, index) => (
+                    <li key={index}>
                         {item.name} - ${item.price}
                     </li>
                 ))}

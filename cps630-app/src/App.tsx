@@ -47,6 +47,7 @@ function App() {
                         <Route element={<Logout />} path='/Logout' />
                         <Route element={<Payment />} path='/Payment' />
                         {/* <Route element={<DbMaintain />} path='/DbMaintain' /> not implemented yet */}
+                        {/* <Route element={<Search />} path='/Search' /> not implemented yet */}
                     </Route>
                 </Routes>
             </AuthContext.Provider>

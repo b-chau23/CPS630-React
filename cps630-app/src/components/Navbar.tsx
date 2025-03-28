@@ -17,6 +17,7 @@ function Navbar() {
                     {/* if user is signed in, show these */}
                         <li><NavLink to='/Payment'>Cart</NavLink></li>
                         <li><NavLink to='/Logout'>Log Out</NavLink></li>
+                        <li><NavLink to='/Search'>Search</NavLink></li>
                     </> :
                     <>
                     {/* if user is not signed in, show these */}

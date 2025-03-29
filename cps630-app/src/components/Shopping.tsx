@@ -16,6 +16,7 @@ interface productItems {
 
 function Shopping() {
   const [initialItems, setInitialItems] = useState<productItems[]>([]);
+  const [itemTypes, setItemTypes] = useState<String[]>([]);
   const [cartList, setCartList] = useState<productItems[]>([]);
   
   // make sure localStorage is clear whenever page is first rendered
@@ -23,8 +24,8 @@ function Shopping() {
     localStorage.removeItem("cartItems");
   }, [])
 
-  // get the items available for sale from the backend
   useEffect(() => {
+    // get the items available for sale from the backend
     fetch('http://localhost/proj2/php/itemsData.php')
     .then((response) => response.json())
     .then((data) => setInitialItems(data))
@@ -32,7 +33,26 @@ function Shopping() {
         console.log(error);
         setInitialItems([]);
     })
+    // get list of item types
+    fetch('http://localhost/proj2/php/itemTypes.php')
+    .then((response) => response.json())
+    .then((data) => setItemTypes(data))
+    .catch((error) => {
+        console.log(error);
+        setItemTypes([]);
+    })
+
   }, [])
+
+  const filterItems = async (formData: FormData) => {
+    const response = await fetch('http://localhost/proj2/php/filterItems.php', {
+      method: 'POST',
+      credentials: 'include',
+      body: formData
+    })
+    const data = await response.json();
+    setInitialItems(data);
+  }
 
   const handleDragEnd = (result: DropResult) => {
     if (!result.destination) return; // Drop outside valid zones
@@ -75,6 +95,30 @@ function Shopping() {
 
   return (
     <div>
+      <form action={filterItems} className="filter-items">
+        <div>
+          <label htmlFor="itemType">Select Item Type:</label>
+          <select id="itemType" name="itemType">
+            <option value="">All</option>
+            {itemTypes.map((itemType, index) => (
+              <option key={index} value={String(itemType)}>{itemType}</option>
+            ))}
+          </select>
+        </div>
+            
+        <div>
+          <label htmlFor="minPrice">Min Price:</label>
+          <input type="number" id="minPrice" name="minPrice" placeholder="Min price"/>
+        </div>
+
+        <div>
+          <label htmlFor="maxPrice">Max Price:</label>
+          <input type="number" id="maxPrice" name="maxPrice" placeholder="Max price"/>
+        </div><br/>
+        <div>
+          <button type="submit">Apply Filters</button>
+        </div>
+      </form>
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className="flex-container">
           {/* Product List (Template List) */}

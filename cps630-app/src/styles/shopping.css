@@ -26,3 +26,13 @@ can be ignored for now
 .review {
     max-height: 300px !important;
 }
+
+.filter-items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-items > div {
+    margin: 10px 5px;
+}

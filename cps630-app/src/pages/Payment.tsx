@@ -27,7 +27,7 @@ function Payment() {
         formData.append("source", origin);
         formData.append("distance", (distance / 1000).toString())
         formData.append("itemIds", localStorage.getItem("cartItems") || "[]");
-        const response = await fetch("http://localhost/proj2/php/payment.php", {
+        const response = await fetch("http://localhost/CPS630-React/php/payment.php", {
             method: "POST",
             credentials: "include",
             body: formData,

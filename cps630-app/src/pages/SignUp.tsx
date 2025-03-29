@@ -16,7 +16,7 @@ function SignUp() {
     });
 
     async function signUp(formData: FormData) {
-        const response = await fetch("http://localhost/proj2/php/signUp.php", {
+        const response = await fetch("http://localhost/CPS630-React/php/signUp.php", {
             method: "POST",
             credentials: "include",
             body: formData,

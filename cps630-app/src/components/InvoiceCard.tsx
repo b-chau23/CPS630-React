@@ -14,7 +14,7 @@ function InvoiceCard() {
 
     // get available items from database
     useEffect(() => {
-        fetch('http://localhost/proj2/php/itemsData.php')
+        fetch('http://localhost/CPS630-React/php/itemsData.php')
         .then((response) => response.json())
         .then((data) => setAvailableItems(data))
         .catch((error) => {

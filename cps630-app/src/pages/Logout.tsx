@@ -6,7 +6,7 @@ function Logout() {
     const auth = useAuthContext();
     
     useEffect(() => {
-        fetch('http://localhost/proj2/php/logout.php', {
+        fetch('http://localhost/CPS630-React/php/logout.php', {
             method: 'DELETE',
             credentials: 'include'
         })

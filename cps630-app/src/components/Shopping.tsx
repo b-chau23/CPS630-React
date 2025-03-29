@@ -26,7 +26,7 @@ function Shopping() {
 
   useEffect(() => {
     // get the items available for sale from the backend
-    fetch('http://localhost/proj2/php/itemsData.php')
+    fetch('http://localhost/CPS630-React/php/itemsData.php')
     .then((response) => response.json())
     .then((data) => setInitialItems(data))
     .catch((error) => {
@@ -34,7 +34,7 @@ function Shopping() {
         setInitialItems([]);
     })
     // get list of item types
-    fetch('http://localhost/proj2/php/itemTypes.php')
+    fetch('http://localhost/CPS630-React/php/itemTypes.php')
     .then((response) => response.json())
     .then((data) => setItemTypes(data))
     .catch((error) => {
@@ -45,7 +45,7 @@ function Shopping() {
   }, [])
 
   const filterItems = async (formData: FormData) => {
-    const response = await fetch('http://localhost/proj2/php/filterItems.php', {
+    const response = await fetch('http://localhost/CPS630-React/php/filterItems.php', {
       method: 'POST',
       credentials: 'include',
       body: formData

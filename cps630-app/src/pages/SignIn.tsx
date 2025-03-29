@@ -8,7 +8,7 @@ function SignIn() {
     const navigate = useNavigate();
 
     async function checkPass(formData: FormData) {        
-        const response = await fetch("http://localhost/proj2/php/signIn.php", {
+        const response = await fetch("http://localhost/CPS630-React/php/signIn.php", {
             method: "POST",
             credentials: "include",
             body: formData,

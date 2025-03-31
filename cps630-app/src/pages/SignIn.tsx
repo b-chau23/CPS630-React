@@ -33,7 +33,11 @@ function SignIn() {
             <h1>Sign In</h1>
             <form action={checkPass}>
                 <input name="username"/><br/>
+<<<<<<< HEAD
                 <input name="password"/><br/>
+=======
+                <input name="password" type="password"/><br/>
+>>>>>>> 2458187 (Hopefully fixed it)
                 <button type="submit">Submit</button>
             </form>
             {failedSignInAttempt && <p>Incorrect Username or Password</p>} 

@@ -1,0 +1,267 @@
+.search-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.search-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.search-controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.search-input {
+  flex-grow: 1;
+  max-width: 400px;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.search-type {
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+}
+
+.search-button {
+  padding: 10px 20px;
+  background-color: #0073e6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.search-button:hover {
+  background-color: #005bb5;
+}
+
+.search-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: #d9534f;
+  background-color: #f9eaea;
+  padding: 10px 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.info-message {
+  color: #5bc0de;
+  background-color: #eaf6fa;
+  padding: 10px 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.loading-message {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  margin: 20px 0;
+}
+
+.no-results {
+  text-align: center;
+  color: #666;
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.search-results h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+.product-results {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Tables for orders and users */
+.orders-table,
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.orders-table th,
+.orders-table td,
+.users-table th,
+.users-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.orders-table th,
+.users-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.orders-table tr:hover,
+.users-table tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Search help info box */
+.search-help {
+  background-color: #f8f9fa;
+  border-left: 4px solid #17a2b8;
+  padding: 10px 15px;
+  margin: 15px 0;
+  border-radius: 4px;
+}
+
+.search-help p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Debug info section */
+.debug-info {
+  margin-top: 30px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.debug-info h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #555;
+}
+
+.debug-info pre {
+  background-color: #eee;
+  padding: 10px;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-size: 12px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .search-controls {
+    flex-direction: column;
+  }
+  
+  .search-input {
+    max-width: 100%;
+  }
+  
+  .orders-table,
+  .users-table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+/* Product Results */
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.product-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.product-type {
+  margin-top: 5px;
+  color: #666;
+}
+
+/* Order Results */
+.order-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.order-header {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.order-header h3 {
+  margin-top: 0;
+  color: #0073e6;
+}
+
+.order-items h4 {
+  margin-top: 0;
+  color: #333;
+}
+
+.order-items ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.order-items li {
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.order-items li:last-child {
+  border-bottom: none;
+}
+
+/* User Results */
+.user-results table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.user-results th, .user-results td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.user-results th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.user-results tr:nth-child(even) {
+  background-color: #f9f9f9;
+} 

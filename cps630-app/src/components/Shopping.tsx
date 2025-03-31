@@ -8,6 +8,8 @@ interface productItems {
     name: string,
     price: string,
     img: string,
+    saleStatus: 0 | 1,
+    salePrice: string
 }
 
 // make sure localStorage is empty on page first load or any relaods
@@ -114,7 +116,16 @@ function Shopping() {
         <div>
           <label htmlFor="maxPrice">Max Price:</label>
           <input type="number" id="maxPrice" name="maxPrice" placeholder="Max price"/>
-        </div><br/>
+        </div>
+
+        <div>
+        <label htmlFor="saleOnly">On Sale:</label>
+        <select id="saleOnly" name="saleOnly">
+          <option value="0">No</option>
+          <option value="1">Yes</option>
+        </select>
+        </div>
+
         <div>
           <button type="submit">Apply Filters</button>
         </div>
@@ -140,10 +151,11 @@ function Shopping() {
                                 {...provided.dragHandleProps}
                             >
                                 <ProductCard 
-                                    imageSrc={item.img}
-                                    productName={item.name}
-                                    price={item.price}
-                                    productId={item.id}
+                                  imageSrc={item.img}
+                                  productName={item.name}
+                                  price={item.price}
+                                  salePrice={item.salePrice}  // Pass sale price if available
+                                  productId={item.id}
                                 />
                             </div>
                             )}
@@ -173,9 +185,11 @@ function Shopping() {
                                 onClick={() => handleRemove(item.id)} // Click to remove
                             >
                                 <ProductCard 
-                                    imageSrc={item.img}
-                                    productName={item.name}
-                                    price={item.price}
+                                  imageSrc={item.img}
+                                  productName={item.name}
+                                  price={item.price}
+                                  salePrice={item.salePrice}  // Pass sale price if available
+                                  productId={item.id}
                                 />
                                 <button
                                 style={{width: "250px"}} // button width to match ProductCard width

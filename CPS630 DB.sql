@@ -18,12 +18,14 @@ CREATE TABLE Item (
     Department_Code CHAR(5) NOT NULL,
     Stock_Quantity INT DEFAULT 0,
     Item_Type VARCHAR(50) NOT NULL,
-    Item_Image VARCHAR(255) NOT NULL
+    Item_Image VARCHAR(255) NOT NULL,
+    Sale_Status TINYINT(1) DEFAULT 0,
+    Sale_Price DECIMAL(10, 2) DEFAULT NULL
 );
 
 CREATE TABLE Payment (
     Payment_Code INT AUTO_INCREMENT PRIMARY KEY,
-    Payment_Method VARCHAR(50) DEFAULT 'credit' NOT NULL,
+    Payment_Method VARCHAR(50) NOT NULL,
     Payment_Status VARCHAR(50) DEFAULT 'accepted' NOT NULL
 );
 
@@ -78,8 +80,8 @@ CREATE TABLE Order_Item (
 
 INSERT INTO Item (Item_Id, Item_Name, Price, Made_in, Department_Code, Stock_Quantity, Item_Type, Item_Image)
 VALUES 
-('1', 'maple chair', '100', 'canada', '100', '5', 'chair', 'https://themontessoriroom.com/cdn/shop/products/maple-wood-classroom-chairs-8-sizes-available-made-in-canada-386961_1080x.png?v=1709266743'),
-('2', 'silver metal chair', '50', 'canada', '100', '10', 'chair', 'https://m.media-amazon.com/images/I/61UoZAL-zdL.jpg'),
-('3', 'brown leather couch', '800', 'canada', '100', '3', 'couch', 'https://m.media-amazon.com/images/I/719mdrIdHtL._AC_UY218_.jpg'),
-('4', 'green performance couch', '400', 'canada', '100', '2', 'couch', 'https://m.media-amazon.com/images/I/41ZoSIkSQsL._AC_UY218_.jpg');
+('1', 'Maple Chair', '100', 'canada', '100', '5', 'Chair', 'https://themontessoriroom.com/cdn/shop/products/maple-wood-classroom-chairs-8-sizes-available-made-in-canada-386961_1080x.png?v=1709266743', 1, 70.00),
+('2', 'Silver Metal Chair', '50', 'canada', '100', '10', 'Chair', 'https://m.media-amazon.com/images/I/61UoZAL-zdL.jpg'),
+('3', 'Brown Leather Couch', '800', 'canada', '100', '3', 'Couch', 'https://m.media-amazon.com/images/I/719mdrIdHtL._AC_UY218_.jpg'),
+('4', 'Green Performance Couch', '400', 'canada', '100', '2', 'Couch', 'https://m.media-amazon.com/images/I/41ZoSIkSQsL._AC_UY218_.jpg');
 

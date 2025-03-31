@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Trip from "../components/Trip";
 import { getUserData } from "../utils/getUserData";
 import InvoiceCard from "../components/InvoiceCard";
+import '../styles/payment.css'
 
 // prop to be drilled to Directions component
 // Directions will need to set the delivery distance and origin for payment to store into db
@@ -50,8 +51,11 @@ function Payment() {
         return (
             <>
                 <div className="container">
+
+                    <div className="invoice-card-container">
                     <h2>Payment Details</h2>
-                    <InvoiceCard />
+                        <InvoiceCard />
+                    </div> <br/><br/>
                     <div id="invoice" className="invoice"></div>
                     <form id="paymentForm" action={makePayment}>
                         <label htmlFor="name">Name:</label>
@@ -98,8 +102,10 @@ function Payment() {
     else if (completedOrderId) {
         return (
             <>
-                <h1>Thank You!</h1>
-                <p>Your Order Id is: {completedOrderId}</p>
+                <div className="center"> 
+                    <h1>Thank You!</h1>
+                    <p>Your Order ID is: {completedOrderId}</p>  
+                </div>
                 <Trip 
                     destination={destination}
                     setDistance={setDistance}

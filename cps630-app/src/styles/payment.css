@@ -1,0 +1,24 @@
+.invoice-card-container {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.invoice-card-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.invoice-card-container li {
+    margin: 10px 0;
+}
+
+.invoice-card-container h3 {
+    margin-bottom: 20px;
+}
+
+.center{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}

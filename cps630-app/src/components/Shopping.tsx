@@ -143,10 +143,7 @@ function Shopping() {
                                     imageSrc={item.img}
                                     productName={item.name}
                                     price={item.price}
-<<<<<<< HEAD
-=======
                                     productId={item.id}
->>>>>>> 2458187 (Hopefully fixed it)
                                 />
                             </div>
                             )}

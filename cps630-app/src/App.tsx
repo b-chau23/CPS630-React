@@ -9,11 +9,8 @@ import Logout from "./pages/Logout";
 import Payment from "./pages/Payment";
 import Home from "./pages/Home";
 import About from "./pages/About";
-<<<<<<< HEAD
-=======
 import Search from "./pages/Search";
 import DbMaintain from "./pages/DbMaintain";
->>>>>>> 2458187 (Hopefully fixed it)
 
 // type for the auth context -- properties and their setters
 // note that this is for display stuff, any actual auth must be verified in backend
@@ -51,13 +48,8 @@ function App() {
                         <Route element={<SignUp />} path='/SignUp' />
                         <Route element={<Logout />} path='/Logout' />
                         <Route element={<Payment />} path='/Payment' />
-<<<<<<< HEAD
-                        {/* <Route element={<DbMaintain />} path='/DbMaintain' /> not implemented yet */}
-                        {/* <Route element={<Search />} path='/Search' /> not implemented yet */}
-=======
                         <Route element={<Search />} path='/Search' />
                         <Route element={<DbMaintain />} path='/DbMaintain' />
->>>>>>> 2458187 (Hopefully fixed it)
                     </Route>
                 </Routes>
             </AuthContext.Provider>

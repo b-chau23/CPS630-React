@@ -1,33 +1,11 @@
-<<<<<<< HEAD
-import '../styles/productCard.css';
-=======
 import { useState } from 'react';
 import '../styles/productCard.css';
 import Reviews from './Reviews';
->>>>>>> 2458187 (Hopefully fixed it)
 
 interface ProductDetailsProp {
     imageSrc: string,
     productName: string,
     price: string,
-<<<<<<< HEAD
-}
-
-const ProductCard = ({ imageSrc, productName, price }: ProductDetailsProp) => {
-  return (
-    <div className="product-card">
-      <div className="product-image-container">
-        <img 
-          src={imageSrc} 
-          alt={productName} 
-          className="product-image"
-        />
-      </div>
-      <div className="product-info">
-        <h3 className="product-name">{productName}</h3>
-        <p className="product-price">{price}</p>
-      </div>
-=======
     productId?: string,
 }
 
@@ -76,7 +54,6 @@ const ProductCard = ({ imageSrc, productName, price, productId }: ProductDetails
           </div>
         </div>
       )}
->>>>>>> 2458187 (Hopefully fixed it)
     </div>
   );
 };

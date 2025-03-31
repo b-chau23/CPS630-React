@@ -19,31 +19,39 @@ if ($conn->connect_error) {
 $itemType = $_POST['itemType'] ?? '';
 $minPrice = $_POST['minPrice'] ?? '';
 $maxPrice = $_POST['maxPrice'] ?? '';
+$saleOnly = $_POST['saleOnly'] ?? '';
 
 $sql = "SELECT * FROM Item WHERE 1"; // WHERE 1 is a placeholder to make adding conditions easier
 
 $types = "";  // Parameter types for bind_param
 $params = []; // Array to store parameter values
 
-// Add item_type filter if set
+// Add itemType filter if set
 if (!empty($itemType)) {
     $sql .= " AND Item_Type = ?";
     $types .= "s";  
     $params[] = $itemType;
 }
 
-// Add min_price filter if set
+// Add minPrice filter if set
 if ($minPrice !== '') {
     $sql .= " AND Price >= ?";
     $types .= "d";  
     $params[] = $minPrice;
 }
 
-// Add max_price filter if set
+// Add maxPrice filter if set
 if ($maxPrice !== '') {
     $sql .= " AND Price <= ?";
     $types .= "d";  
     $params[] = $maxPrice;
+}
+
+// Add onSale filter if set
+if ($saleOnly !== '') {
+    $sql .= " AND Sale_Status = ?";
+    $types .= "i";  
+    $params[] = $saleOnly;
 }
 
 $stmt = $conn->prepare($sql);
@@ -65,7 +73,9 @@ if ($result->num_rows > 0) {
             'id' => (string) $row['Item_Id'], 
             'name' => $row['Item_Name'],
             'price' => $row['Price'],
-            'img' => $row['Item_Image']
+            'img' => $row['Item_Image'],
+            'saleStatus' => $row['Sale_Status'],
+            'salePrice' => $row['Sale_Price']
         ];
     }
 }

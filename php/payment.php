@@ -39,10 +39,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $currentDate = date('Y-m-d');
     $userId = $_SESSION['userId'];
 
-    // from the list of ids, we need the list of their corresponding prices
-    // we query the database to do this
+    // from the list of ids, we need the list of their corresponding prices (including sale prices)
+    // we query the database to get the price, prioritizing sale_price if it is available
     $placeholders = implode(',', array_fill(0, count($itemIds), '?'));
-    $query = "SELECT item_id, price FROM item WHERE item_id IN ($placeholders)";
+    $query = "SELECT item_id, 
+                     IFNULL(sale_price, price) AS price 
+              FROM item 
+              WHERE item_id IN ($placeholders)";
     $stmt = $conn->prepare($query);
     // Bind parameters dynamically
     $types = str_repeat('i', count($itemIds));
@@ -50,12 +53,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Execute
     $stmt->execute();
     $result = $stmt->get_result();
+
     // fill itemPrices array with result. format is "id=>price"
     while ($row = $result->fetch_assoc()) {
         $itemPrices[$row['item_id']] = $row['price'];
     }
+
     // get quantity of each item. format of the assoc array is "id=>quantity"
     $itemQuantity = array_count_values($itemIds); 
+
     // Get total price of items
     $totalPrice = 0; 
     foreach ($itemQuantity as $itemId => $quantity) {

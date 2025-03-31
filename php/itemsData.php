@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 }
 
 
-$result = $conn->query("SELECT Item_Id, Item_Name, Price, Item_Image FROM item");
+$result = $conn->query("SELECT Item_Id, Item_Name, Price, Item_Image, Sale_Status, Sale_Price FROM item");
 
 // fetch results and store them in an array
 if ($result->num_rows > 0) {
@@ -25,7 +25,9 @@ if ($result->num_rows > 0) {
             'id' => $row['Item_Id'],
             'name' => $row['Item_Name'],
             'price' => $row['Price'],
-            'img' => $row['Item_Image']
+            'img' => $row['Item_Image'],
+            'saleStatus' => $row['Sale_Status'],
+            'salePrice' => $row['Sale_Price']
         ];
     }
 }

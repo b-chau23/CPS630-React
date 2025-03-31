@@ -33,6 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $deliveryDate = $_POST['deliveryDate'];
     $itemIds = json_decode($_POST['itemIds'], true); // list of ids
     $itemPrices = []; // we will fill this later
+    $paymentMethod = $_POST['paymentMethod'];
 
     // some other stuff needed
     $currentDate = date('Y-m-d');
@@ -62,12 +63,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // SQL query to insert a new row into the Payment table
-    $paymentQuery = "INSERT INTO Payment () VALUES ()"; // Empty because defaults will handle the fields
-    // Execute the paymentQuery
-    if (mysqli_query($conn, $paymentQuery)) {
-        // echo "New payment record inserted successfully. ";
+    // Prepare
+    $paymentQuery = $conn->prepare("INSERT INTO Payment (Payment_Method) VALUES (?)");
+    $paymentQuery->bind_param("s", $paymentMethod); // "s" stands for the string type
+
+    // Execute the statement
+    if ($paymentQuery->execute()) {
+        // echo "New payment record inserted successfully.";
     } else {
-        echo json_encode(["error" => $paymentQuery, "message" => mysqli_error($conn)]);
+        echo json_encode(["error" => $paymentQuery->error, "message" => $paymentQuery->error]);
     }
     // Get the Payment_Code of the newly inserted Payment row
     $paymentCode = mysqli_insert_id($conn);

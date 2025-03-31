@@ -25,7 +25,7 @@ if ($conn->connect_error) {
 }
 
 // Prepare statement
-$stmt = $conn->prepare("SELECT User_Id, Username, Name, Password, Email, Address, Role FROM User WHERE Username = ?");
+$stmt = $conn->prepare("SELECT User_Id, Username, Name, Password, Email, Address, Role, Salt FROM User WHERE Username = ?");
 $stmt->bind_param("s", $username);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -37,7 +37,18 @@ if ($result->num_rows > 0) {
     // For debugging only - in production environments NEVER log passwords
     error_log("Login attempt for user: $username - User exists");
     
-    if (password_verify($userPassword, $userInfo['Password'])) {
+    // Check if the credentials match a user in the system with MD5 hash and salt
+    $storedSalt = $userInfo['Salt'];  // Get the stored salt
+    $storedHashedPassword = $userInfo['Password'];  // Get the stored hashed password
+
+    // Concatenate the entered password with the stored salt
+    $saltedPassword = $userPassword . $storedSalt;
+
+    // Hash the concatenated password and salt
+    $hashedPassword = md5($saltedPassword);
+
+    // Compare the entered (hashed) password with the stored hashed password
+    if ($hashedPassword === $storedHashedPassword) {
         // Password matches, set session variables
         $_SESSION["user_id"] = $userInfo["User_Id"];
         $_SESSION["username"] = $userInfo["Username"];
@@ -52,7 +63,8 @@ if ($result->num_rows > 0) {
         error_log("Login failed for user: $username - Password mismatch");
         echo json_encode(["error" => "Incorrect username or password"]);
     }
-} else {
+}
+else {
     error_log("Login failed for user: $username - User not found");
     echo json_encode(["error" => "Incorrect username or password"]);
 }

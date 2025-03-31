@@ -54,21 +54,29 @@ function Payment() {
                     <InvoiceCard />
                     <div id="invoice" className="invoice"></div>
                     <form id="paymentForm" action={makePayment}>
-                        <label htmlFor="name">Name:</label><br/>
+                        <label htmlFor="name">Name:</label>
                         <input type="text" id="name" name="name" defaultValue={userData.name} required /><br/>
 
-                        <label htmlFor="address">Adress:</label><br/>
+                        <label htmlFor="address">Address:</label>
                         <input type="text" id="address" name="address" defaultValue={userData.address} 
-                            onBlur={(e) => {setDestination(e.target.value)}} required /><br/>
-                        {distance === -1 && <p>Error: We currently do not ship to this location</p>}
+                            onBlur={(e) => {setDestination(e.target.value)}} required />
+                        {distance === -1 && <p>Error: We currently do not ship to this location</p>}<br/>
 
-                        <label htmlFor="email">Email:</label><br/>
+                        <label htmlFor="email">Email:</label>
                         <input type="text" id="email" name="email" defaultValue={userData.email} required /><br/>
 
-                        <label htmlFor="cardNumber">Credit Card Number:</label><br/>
+                        <label htmlFor="paymentMethod">Payment Method:</label>
+                        <select id="paymentMethod" name="paymentMethod" required>
+                            <option value="">Select Payment Method</option>
+                            <option value="creditCard">Credit Card</option>
+                            <option value="debitCard">Debit Card</option>
+                            <option value="giftCard">Gift Card</option>
+                        </select><br/>
+
+                        <label htmlFor="cardNumber">Card Number:</label>
                         <input type="text" id="cardNumber" name="cardNumber" maxLength={16} required /><br/>
 
-                        <label htmlFor="deliveryDate">Delivery Date</label><br/>
+                        <label htmlFor="deliveryDate">Delivery Date:</label>
                         <input type="date" id="deliveryDate" name="deliveryDate" required /><br/>
 
                         {failedPaymentAttempt && <><span className="error" id="cardError">{failedPaymentAttempt}</span><br/></>}

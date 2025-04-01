@@ -16,12 +16,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 session_start();
 
-// Debug - No debug logging
+// Debug session variables
+error_log("SESSION data in addReview.php: " . print_r($_SESSION, true));
 
-// Check if user is logged in
-if (!isset($_SESSION['user_id'])) {
-    echo json_encode(['error' => 'You must be logged in to submit a review']);
-    exit();
+// Handle session variable inconsistency (user_id vs userId)
+if (!isset($_SESSION['user_id']) && isset($_SESSION['userId'])) {
+    $_SESSION['user_id'] = $_SESSION['userId'];
+    error_log("Session variable synchronized: userId -> user_id");
 }
 
 // Check if all required fields are present

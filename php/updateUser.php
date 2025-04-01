@@ -21,6 +21,11 @@ if ($conn->connect_error) {
     die(json_encode(["error" => "Connection failed: " . $conn->connect_error]));
 }
 
+// Function to generate salt value
+function generateRandomSalt() {
+    return base64_encode(random_bytes(12));
+}
+
 try {
     // Check if user is admin
     if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
@@ -53,28 +58,20 @@ try {
         throw new Exception("Username already exists for another user");
     }
 
-    // If password is provided, hash it and update it
+    // If user provided a password, update it with new salt
     if (!empty($password)) {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $salt = generateRandomSalt();
+        $hashedPassword = md5($password . $salt);
         
-        $sql = "UPDATE User SET Username = ?, Name = ?, Password = ?, Email = ?, Role = ?, Phone = ?, Address = ? WHERE User_Id = ?";
+        // Use MD5 with salt for password hashing
+        $sql = "UPDATE User SET Username = ?, Name = ?, Password = ?, Email = ?, Role = ?, Phone = ?, Address = ?, Salt = ? WHERE User_Id = ?";
         $stmt = $conn->prepare($sql);
-        
-        if (!$stmt) {
-            throw new Exception("Prepare failed: " . $conn->error);
-        }
-        
-        $stmt->bind_param("ssssssi", $username, $name, $hashed_password, $email, $role, $phone, $address, $user_id);
+        $stmt->bind_param("ssssssssi", $username, $name, $hashedPassword, $email, $role, $phone, $address, $salt, $user_id);
     } else {
-        // If no password is provided, update without changing password
+        // No password update, keep existing password
         $sql = "UPDATE User SET Username = ?, Name = ?, Email = ?, Role = ?, Phone = ?, Address = ? WHERE User_Id = ?";
         $stmt = $conn->prepare($sql);
-        
-        if (!$stmt) {
-            throw new Exception("Prepare failed: " . $conn->error);
-        }
-        
-        $stmt->bind_param("sssssi", $username, $name, $email, $role, $phone, $address, $user_id);
+        $stmt->bind_param("ssssssi", $username, $name, $email, $role, $phone, $address, $user_id);
     }
     
     if (!$stmt->execute()) {

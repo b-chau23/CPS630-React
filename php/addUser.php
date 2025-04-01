@@ -21,6 +21,11 @@ if ($conn->connect_error) {
     die(json_encode(["error" => "Connection failed: " . $conn->connect_error]));
 }
 
+// Function to generate salt value
+function generateRandomSalt() {
+    return base64_encode(random_bytes(12));
+}
+
 try {
     // Check if user is admin
     if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
@@ -63,12 +68,13 @@ try {
     $row = $maxIdResult->fetch_assoc();
     $next_id = $row['max_id'] ? intval($row['max_id']) + 1 : 1;
     
-    // Hash the password
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    // Hash password using MD5 and salt
+    $salt = generateRandomSalt();
+    $hashedPassword = md5($password . $salt);
 
     // Insert the new user with the incremented ID
-    $sql = "INSERT INTO User (User_Id, Username, Name, Password, Email, Role, Phone, Address) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO User (User_Id, Username, Name, Password, Email, Role, Phone, Address, Salt) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             
     $stmt = $conn->prepare($sql);
     
@@ -76,7 +82,7 @@ try {
         throw new Exception("Prepare failed: " . $conn->error);
     }
     
-    $stmt->bind_param("isssssss", $next_id, $username, $name, $hashed_password, $email, $role, $phone, $address);
+    $stmt->bind_param("issssssss", $next_id, $username, $name, $hashedPassword, $email, $role, $phone, $address, $salt);
     
     if (!$stmt->execute()) {
         throw new Exception("Execute failed: " . $stmt->error);

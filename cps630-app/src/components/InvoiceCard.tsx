@@ -34,6 +34,13 @@ function InvoiceCard() {
 
         cart.forEach((itemId) => {
             const index = availableItems.findIndex(obj => obj.id === itemId);
+            
+            // Skip items that aren't found in availableItems
+            if (index === -1) {
+                console.warn(`Item with ID ${itemId} not found in available items`);
+                return;
+            }
+            
             const item = availableItems[index];
 
             // Add to cart and calculate total

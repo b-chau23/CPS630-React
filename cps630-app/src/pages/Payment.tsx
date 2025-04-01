@@ -25,22 +25,55 @@ function Payment() {
     const [origin, setOrigin] = useState('Toronto Metropolitan University, Victoria Street, Toronto, ON, Canada',)
 
     async function makePayment(formData: FormData) {
-        formData.append("source", origin);
-        formData.append("distance", (distance / 1000).toString())
-        formData.append("itemIds", localStorage.getItem("cartItems") || "[]");
-        const response = await fetch("http://localhost/CPS630-React/php/payment.php", {
-            method: "POST",
-            credentials: "include",
-            body: formData,
-        })
+        try {
+            formData.append("source", origin);
+            formData.append("distance", (distance / 1000).toString());
+            
+            // Get the cart items from localStorage
+            const cartItems = localStorage.getItem("cartItems") || "[]";
+            
+            // Check if cart is empty
+            if (cartItems === "[]") {
+                setfailedPaymentAttempt("Your cart is empty. Please add items before checkout.");
+                return;
+            }
+            
+            formData.append("itemIds", cartItems);
+            
+            const response = await fetch("http://localhost/CPS630-React/php/payment.php", {
+                method: "POST",
+                credentials: "include",
+                body: formData,
+            });
 
-        const result = await response.json();
-        if (result.error) {
-            setfailedPaymentAttempt(result.error);
-        }
-        else {
-            setfailedPaymentAttempt(''); 
-            setCompletedOrderId(result.orderNum);
+            // Check if response was successful
+            if (!response.ok) {
+                console.error("Payment API error:", response.status, response.statusText);
+                setfailedPaymentAttempt(`Server error: ${response.statusText}`);
+                return;
+            }
+
+            let result;
+            try {
+                result = await response.json();
+            } catch (error) {
+                console.error("Failed to parse JSON response:", error);
+                setfailedPaymentAttempt("Server returned invalid data. Please try again later.");
+                return;
+            }
+
+            if (result.error) {
+                console.error("Payment error:", result.error);
+                setfailedPaymentAttempt(result.error);
+            } else {
+                // Success - clear the cart from localStorage
+                localStorage.removeItem("cartItems");
+                setfailedPaymentAttempt(''); 
+                setCompletedOrderId(result.orderNum);
+            }
+        } catch (error) {
+            console.error("Payment processing error:", error);
+            setfailedPaymentAttempt("An unexpected error occurred. Please try again later.");
         }
     }
 

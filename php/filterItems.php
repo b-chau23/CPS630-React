@@ -19,6 +19,7 @@ if ($conn->connect_error) {
 $itemType = $_POST['itemType'] ?? '';
 $minPrice = $_POST['minPrice'] ?? '';
 $maxPrice = $_POST['maxPrice'] ?? '';
+$saleOnly = $_POST['saleOnly'] ?? '0';
 
 $sql = "SELECT * FROM Item WHERE 1"; // WHERE 1 is a placeholder to make adding conditions easier
 
@@ -46,6 +47,11 @@ if ($maxPrice !== '') {
     $params[] = $maxPrice;
 }
 
+// Add sale filter if set to 1 (Yes)
+if ($saleOnly === '1') {
+    $sql .= " AND Sale_Status = 1";
+}
+
 $stmt = $conn->prepare($sql);
 
 if ($params) { // Only bind if there are parameters
@@ -59,13 +65,24 @@ $items = [];
 // fetch results and store them in an array
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
+        // Check if item is on sale
+        $saleStatus = (int)($row['Sale_Status'] ?? 0);
+        $salePrice = null;
+        
+        // If item is on sale, use the Sale_Price value
+        if ($saleStatus === 1 && !empty($row['Sale_Price'])) {
+            $salePrice = $row['Sale_Price'];
+        }
+        
         // rename the keys to match the interface in Shopping.tsx
         $items[] = [
-            //cast id as it needs to be string for draggableId. not an issue in itemsData.php for some reason
+            //cast id as it needs to be string for draggableId
             'id' => (string) $row['Item_Id'], 
             'name' => $row['Item_Name'],
             'price' => $row['Price'],
-            'img' => $row['Item_Image']
+            'img' => $row['Item_Image'],
+            'saleStatus' => $saleStatus,
+            'salePrice' => $salePrice
         ];
     }
 }

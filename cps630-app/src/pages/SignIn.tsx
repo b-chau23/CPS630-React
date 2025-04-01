@@ -32,8 +32,10 @@ function SignIn() {
         <>
             <h1>Sign In</h1>
             <form action={checkPass}>
-                <input name="username"/><br/>
-                <input name="password" type="password"/><br/>
+                <label htmlFor="username">Username:</label>
+                <input name="username" placeholder="Username"/>
+                <label htmlFor="password">Password:</label>
+                <input name="password" placeholder="Password"type="password"/>
                 <button type="submit">Submit</button>
             </form>
             {failedSignInAttempt && <p>Incorrect Username or Password</p>} 

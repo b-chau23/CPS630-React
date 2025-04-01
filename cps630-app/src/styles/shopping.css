@@ -19,6 +19,30 @@
     color: #333;
 }
 
+/* .filter-items to handle form layout */
+.filter-items {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; /* Ensure the form takes up full width of container */
+    justify-content: center;
+    max-width: 400px; /* Optional to limit width of the form */
+    margin: 20px auto; /* Center the form on the page */
+    gap: 15px; /* Space between form elements */
+}
+
+.filter-items label {
+    font-weight: bold;
+    margin-bottom: 5px; /* Space between label and input */
+}
+
+.filter-items select,
+.filter-items input,
+.filter-items button {
+    padding: 10px;
+    font-size: 1rem;
+    width: 100%; /* Ensure full width */
+}
+
 /* 
 the below would be used for displaying reviews in the drag and drop shopping component 
 can be ignored for now
@@ -27,12 +51,3 @@ can be ignored for now
     max-height: 300px !important;
 }
 
-.filter-items {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.filter-items > div {
-    margin: 10px 5px;
-}

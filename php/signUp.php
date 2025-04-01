@@ -20,6 +20,11 @@ if ($conn->connect_error) {
 $signup_error = '';
 $signup_success = false;
 
+// Function to generate salt value
+function generateRandomSalt(){
+    return base64_encode(random_bytes(12));
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get form data
     $fullName = $_POST['fullName'] ?? '';
@@ -66,13 +71,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $signup_error = "Email already exists";
             } else {
                 // Hash the password
-                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+                $salt = generateRandomSalt();
+                $hashedPassword = md5($password . $salt);
                 
                 // Insert new user
-                $insert_sql = "INSERT INTO user (username, password, email, phone, address, name, role) 
-                              VALUES (?, ?, ?, ?, ?, ?, ?)";
+                $insert_sql = "INSERT INTO user (username, password, email, phone, address, name, role, salt) 
+                              VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                 $insert_stmt = $conn->prepare($insert_sql);
-                $insert_stmt->bind_param("sssssss", $username, $hashedPassword, $email, $phone, $address, $fullName, $role);
+                $insert_stmt->bind_param("ssssssss", $username, $hashedPassword, $email, $phone, $address, $fullName, $role, $salt);
                 
                 if ($insert_stmt->execute()) {
                     $signup_success = true;

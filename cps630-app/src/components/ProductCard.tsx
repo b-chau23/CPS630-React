@@ -6,10 +6,11 @@ interface ProductDetailsProp {
     imageSrc: string,
     productName: string,
     price: string,
+    salePrice?: string,  // Optional sale price
     productId?: string,
 }
 
-const ProductCard = ({ imageSrc, productName, price, productId }: ProductDetailsProp) => {
+const ProductCard = ({ imageSrc, productName, price, salePrice, productId }: ProductDetailsProp) => {
   const [showDetails, setShowDetails] = useState(false);
 
   const toggleDetails = () => {
@@ -30,7 +31,19 @@ const ProductCard = ({ imageSrc, productName, price, productId }: ProductDetails
         </div>
         <div className="product-info">
           <h3 className="product-name">{productName}</h3>
-          <p className="product-price">${price}</p>
+
+          {/* Check if salePrice exists and display accordingly */}
+          <p className="product-price">
+            {salePrice ? (
+              <>
+                <span className="original-price">${price}</span> {/* Strike-through original price */}
+                <span className="sale-price">${salePrice}</span> {/* Display sale price */}
+              </>
+            ) : (
+              `$${price}` // Just regular price if no sale price
+            )}
+          </p>
+
           {productId && <button className="view-details-btn">View Details</button>}
         </div>
       </div>
@@ -47,7 +60,18 @@ const ProductCard = ({ imageSrc, productName, price, productId }: ProductDetails
               />
               <div className="product-detail-info">
                 <h2>{productName}</h2>
-                <p className="product-detail-price">${price}</p>
+
+                {/* Check if salePrice exists and display accordingly */}
+                <p className="product-detail-price">
+                  {salePrice ? (
+                    <>
+                      <span className="original-price">${price}</span> {/* Strike-through original price */}
+                      <span className="sale-price">${salePrice}</span> {/* Display sale price */}
+                    </>
+                  ) : (
+                    `$${price}` // Just regular price if no sale price
+                  )}
+                </p>
               </div>
             </div>
             <Reviews productId={productId} />

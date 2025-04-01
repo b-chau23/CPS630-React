@@ -1,42 +1,56 @@
 import { useEffect, useState } from "react";
 
 interface productItems {
-    id: string,
-    name: string,
-    price: string,
-    img: string,
+    id: string;
+    name: string;
+    price: string;
+    salePrice: string;
+    img: string;
 }
 
 function InvoiceCard() {
-    const [cartItems, setCartItems] = useState<productItems[]>([]); // what we are going to display
+    const [cartItems, setCartItems] = useState<productItems[]>([]); // Items to display in the cart
     const [cartTotal, setCartTotal] = useState(0.00);
-    const [availableItems, setAvailableItems] = useState<productItems[]>([]); // all items from db
+    const [availableItems, setAvailableItems] = useState<productItems[]>([]); // All items from the DB
 
-    // get available items from database
+    // Get available items from the database
     useEffect(() => {
         fetch('http://localhost/CPS630-React/php/itemsData.php')
-        .then((response) => response.json())
-        .then((data) => setAvailableItems(data))
-        .catch((error) => {
-            console.log(error);
-            setAvailableItems([]);
-        })
-    }, [])
+            .then((response) => response.json())
+            .then((data) => setAvailableItems(data))
+            .catch((error) => {
+                console.log(error);
+                setAvailableItems([]);
+            });
+    }, []);
 
-    // use the stored ids from localStorage to find their corresponding details
+    // Use the stored ids from localStorage to find their corresponding details
     useEffect(() => {
         if (availableItems.length === 0) return;
-        const cart: string[] = JSON.parse(localStorage.getItem("cartItems") || "[]")
+
+        const cart: string[] = JSON.parse(localStorage.getItem("cartItems") || "[]");
         let toSetCart: productItems[] = [];
         let total = 0;
+
         cart.forEach((itemId) => {
-            const index = availableItems.findIndex(obj => obj.id === itemId)
-            total += Number(availableItems[index].price)
-            toSetCart.push(availableItems[index])
-            setCartItems(toSetCart)
-        })
-        setCartTotal(total)
-    }, [availableItems])
+            const index = availableItems.findIndex(obj => obj.id === itemId);
+            
+            // Skip items that aren't found in availableItems
+            if (index === -1) {
+                console.warn(`Item with ID ${itemId} not found in available items`);
+                return;
+            }
+            
+            const item = availableItems[index];
+
+            // Add to cart and calculate total
+            total += item.salePrice ? Number(item.salePrice) : Number(item.price); // Use sale price if available
+            toSetCart.push(item);
+        });
+
+        setCartItems(toSetCart);
+        setCartTotal(total);
+    }, [availableItems]);
 
     return (
         <>
@@ -44,7 +58,21 @@ function InvoiceCard() {
             <ul>
                 {cartItems.map((item, index) => (
                     <li key={index}>
-                        {item.name} - ${item.price}
+                        <div>
+                            <span>{item.name}: </span>
+                            {item.salePrice ? (
+                                <>
+                                    <span style={{ textDecoration: "line-through", marginRight: "10px" }}>
+                                        ${item.price}
+                                    </span>
+                                    <span>
+                                        ${item.salePrice}
+                                    </span>
+                                </>
+                            ) : (
+                                <span>${item.price}</span>
+                            )}
+                        </div>
                     </li>
                 ))}
             </ul>
